@@ -1,0 +1,87 @@
+<form onsubmit="return false" 
+oninput="
+//Wind Velocity
+windvelosout.value = windvelosinput.valueAsNumber; 
+
+//High of position
+highout.value = highinput.valueAsNumber; 
+
+//Inside diameter of Rotor
+insidediamout.value = insidediaminput.valueAsNumber; 
+
+//Outside diameter of Rotor
+outsidediamout.value = outsidediaminput.valueAsNumber;
+
+//Flow area of wind
+flowareaout.value =  (3.14 * (outsidediaminput.value * outsidediaminput.value-insidediaminput.value* insidediaminput.value)/4).toFixed(3);
+
+//Dencity if air
+dencityout.value = (1.2255*Math.pow((1-6.5*highout.value/288000),4.255)).toFixed(3);
+
+//Coefficient of wind power use
+coeffofuseout.value = coeffofuseinput.valueAsNumber;
+
+//Efficiency of generator
+efficiencyout.value = efficiencyinput.valueAsNumber;
+
+//Power of generator
+powerout.value=(0.5*dencityout.value*flowareaout.value*Math.pow(windvelosout.value,3)*coeffofuseout.value*efficiencyout.value).toFixed(2)">
+  
+  <input id="high" class="del" type="checkbox"/><label for="high" class="del">Set the altitude of the flight </label>
+  <div>The choice of flight altitude affects the density of air.<br/><br/>
+  It should be remembered that the cable is longer than the altitude of the flight.<br/>
+   <img class="alignnone size-medium wp-image-421" src="http://www.enornis.com/wp-content/uploads/2017/10/fly_01small-300x169.png" alt="" width="300" height="169" /><br/>
+  By the way, the height of the column of the largest stationary wind turbine is 135 m.
+  </div>
+  <input name="highinput" id="highid" type="range" min="0" max="3000" value="100" step="100"> 
+  H = <output for="high" name="highout">100</output>&nbsp;м<br><br> 
+  
+  <input id="windvelos" class="del" type="checkbox"/><label for="windvelos" class="del">Set wind speed</label>
+  <div>Wind speed can be set either yourself, or using the service Earth.
+  In this service, the value of the wind speed can be determined from the location, time and altitude coordinates.
+  Unfortunately, the speed value is known only for several levels of heights and the intermediate values are determined by the approximation yourself.
+  The selected height is determined by the pressure level, according to the following table: <br/>
+  SFC - 0м<br/>
+  1000 hPa - 100 m<br/>
+  850 hPa - 1500 m<br/>
+  700 hPa - 3500 m<br/>
+  500 hPa - 5000 m<br/>
+  250 hPa - 10500 m<br/>
+  </div>
+  <a href="https://earth.nullschool.net/" target="_blank">Go to the Earth service</a>
+  <br/>
+  <input name="windvelosinput" id="windvelosid" type="range" min="3" max="100" value="5" step="0.1"> 
+  V=<output for="windvelos" name="windvelosout">5</output>&nbsp;m/s<br><br>
+  
+  <input id="outsidediam" class="del" type="checkbox"/><label for="outsidediam">Set the outer diameter of the blades</label>
+  <div>Minimum diameter 0.3 m<br/>
+  Maximum diameter 5 m<br/>
+  Scale step 0.1 m<br/>
+  The outer diameter is not less than the inner diameter. <br/><br/>
+  By the way, the external diameter of the largest stationary wind generator E-126 127m<br/>
+	<iframe width="560" height="315" src="https://www.youtube.com/embed/LQxp6QTjgJg" frameborder="0" allowfullscreen></iframe>
+  </div>
+  <input name="outsidediaminput" id="outsidediamid" type="range" min="0.5" max="5" value="1" step="0.1"> 
+  D1 = <output for="outsidediam" name="outsidediamout">1</output>&nbsp;m<br><br>
+
+  <label for="insidediam">Set the internal diameter of the blades </label>
+  <input name="insidediaminput" id="insidediamid" type="range" min="0.1" max="0.45" value="0.1" step="0.01"> 
+  D2 = <output for="insidediam" name="insidediamout">0.1</output>&nbsp;m<br><br>
+
+  <label for="flowarea"><b>Flow area S = 3,14 * (D1/2)^2 - 3,14 * (D2/2)^2 = </b></label>
+  <output for="flowarea" name="flowareaout">0.777</output>&nbsp;m2<br><br>
+
+<label for="dencity"><b>Air density Ro = 1,2255 * (1-6,5*H/288)^4,255 = </b></label>
+  <output for="dencity" name="dencityout">1.23</output>&nbsp;kg/m3<br><br>
+
+  <label for="coeffofuse">Coefficient of use of wind energy (avg 0.35)</label>
+  <input name="coeffofuseinput" id="coeffofuseid" type="range" min="0.2" max="1" value="0.35" step="0.01"> 
+  Cp = <output for="coeffofuse" name="coeffofuseout">0.35</output><br><br>
+
+<label for="efficiency">Efficiency of the generator (for permanent magnets 0.8)</label>
+<input name="efficiencyinput" id="efficiencyid" type="range" min="0.5" max="1" value="0.8" step="0.01">
+  Ng=<output for="efficiency" name="efficiencyout">0.8</output><br><br>
+
+  <label for="power"><b>Generator power P = 0,5 * Ro * S * V^3 * Cp *Ng</b> =</label>
+  <output for="power" name="powerout">16.67</output>&nbsp;W<br><br>
+</form>
